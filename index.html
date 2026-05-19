@@ -1,0 +1,1396 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta property="og:title" content="Hoon's — Modern Minimal Menswear" />
+    <meta property="og:description" content="군더더기 없는 셔츠, 슬랙스, 자켓. 매일 입고 싶어지는 옷을 만듭니다." />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <title>Hoon's — Modern Minimal Menswear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              ink: "#1C1C1C",
+              charcoal: "#3A3730",
+              stone: "#8C8980",
+              ivory: "#F5F2EC",
+              linen: "#EAE6DF",
+              cream: "#D6D1C8",
+            },
+            fontFamily: {
+              display: ['"Cormorant Garamond"', "serif"],
+              sans: ['"DM Sans"', "sans-serif"],
+            },
+            letterSpacing: {
+              widest2: "0.2em",
+              widest3: "0.3em",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* ── scrollbar ── */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f5f2ec;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #8c8980;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* ── page-load stagger ── */
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        animation: fadeUp 0.7s ease forwards;
+      }
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .delay-1 {
+        animation-delay: 0.1s;
+      }
+      .delay-2 {
+        animation-delay: 0.25s;
+      }
+      .delay-3 {
+        animation-delay: 0.4s;
+      }
+      .delay-4 {
+        animation-delay: 0.55s;
+      }
+      .delay-5 {
+        animation-delay: 0.7s;
+      }
+
+      /* ── hero marquee ── */
+      .marquee-track {
+        display: flex;
+        gap: 3rem;
+        animation: marquee 20s linear infinite;
+        width: max-content;
+      }
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* ── product card image hover ── */
+      .product-img-wrap {
+        overflow: hidden;
+      }
+      .product-img-wrap img {
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .product-card:hover .product-img-wrap img {
+        transform: scale(1.05);
+      }
+
+      /* ── underline link ── */
+      .link-underline {
+        position: relative;
+        display: inline-block;
+      }
+      .link-underline::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+      .link-underline:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      /* ── nav active underline ── */
+      .nav-item {
+        position: relative;
+        padding-bottom: 2px;
+      }
+      .nav-item::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: #1c1c1c;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.25s ease;
+      }
+      .nav-item:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      /* ── lookbook hover overlay ── */
+      .look-card {
+        position: relative;
+        overflow: hidden;
+      }
+      .look-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(28, 28, 28, 0);
+        display: flex;
+        align-items: flex-end;
+        padding: 1.5rem;
+        transition: background 0.4s ease;
+      }
+      .look-card:hover .look-overlay {
+        background: rgba(28, 28, 28, 0.45);
+      }
+      .look-overlay-text {
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          opacity 0.35s ease,
+          transform 0.35s ease;
+        transition-delay: 0.05s;
+      }
+      .look-card:hover .look-overlay-text {
+        opacity: 1;
+        transform: none;
+      }
+      .look-img {
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .look-card:hover .look-img {
+        transform: scale(1.04);
+      }
+
+      /* ── cart badge bounce ── */
+      @keyframes pop {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.3);
+        }
+      }
+      .badge-pop {
+        animation: pop 0.3s ease;
+      }
+
+      /* ── mobile nav ── */
+      #mobile-menu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+      }
+      #mobile-menu.open {
+        max-height: 400px;
+      }
+    </style>
+  </head>
+
+  <body class="bg-white font-sans text-ink antialiased">
+    <!-- ══════════════════════════════
+     ANNOUNCEMENT BAR
+══════════════════════════════ -->
+    <div class="bg-ink text-ivory text-center py-2.5">
+      <p class="text-[10px] tracking-widest2 uppercase font-light">
+        무료 배송 · 5만원 이상 구매 시 / Free Returns within 30 days
+      </p>
+    </div>
+
+    <!-- ══════════════════════════════
+     NAVIGATION
+══════════════════════════════ -->
+    <header
+      id="navbar"
+      class="sticky top-0 z-50 bg-white border-b border-linen transition-shadow duration-300"
+    >
+      <nav
+        class="max-w-screen-xl mx-auto px-6 lg:px-12 flex items-center justify-between h-16"
+      >
+        <!-- left nav -->
+        <ul class="hidden lg:flex items-center gap-8">
+          <li>
+            <a
+              href="#new"
+              class="nav-item text-[11px] tracking-widest uppercase font-light text-charcoal hover:text-ink transition-colors"
+              >New In</a
+            >
+          </li>
+          <li>
+            <a
+              href="#collection"
+              class="nav-item text-[11px] tracking-widest uppercase font-light text-charcoal hover:text-ink transition-colors"
+              >Collection</a
+            >
+          </li>
+          <li>
+            <a
+              href="#lookbook"
+              class="nav-item text-[11px] tracking-widest uppercase font-light text-charcoal hover:text-ink transition-colors"
+              >Lookbook</a
+            >
+          </li>
+        </ul>
+
+        <!-- logo (center) -->
+        <a
+          href="#"
+          class="font-display text-3xl font-light tracking-widest2 select-none absolute left-1/2 -translate-x-1/2"
+        >
+          Hoon's
+        </a>
+
+        <!-- right icons -->
+        <div class="flex items-center gap-5 ml-auto lg:ml-0">
+          <!-- search -->
+          <button
+            id="search-btn"
+            class="hidden lg:block text-stone hover:text-ink transition-colors"
+            aria-label="검색"
+          >
+            <svg
+              class="w-[18px] h-[18px]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </button>
+          <!-- wishlist -->
+          <button
+            class="hidden lg:block text-stone hover:text-ink transition-colors"
+            aria-label="위시리스트"
+          >
+            <svg
+              class="w-[18px] h-[18px]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              />
+            </svg>
+          </button>
+          <!-- cart -->
+          <button
+            id="cart-btn"
+            class="relative text-stone hover:text-ink transition-colors"
+            aria-label="장바구니"
+          >
+            <svg
+              class="w-[18px] h-[18px]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+            >
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            <span
+              id="cart-badge"
+              class="absolute -top-1.5 -right-1.5 bg-ink text-ivory text-[9px] font-medium w-4 h-4 rounded-full flex items-center justify-center leading-none"
+              >0</span
+            >
+          </button>
+          <!-- mobile hamburger -->
+          <button
+            id="menu-btn"
+            class="lg:hidden text-stone hover:text-ink transition-colors ml-1"
+            aria-label="메뉴"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+            >
+              <line x1="4" y1="7" x2="20" y2="7" />
+              <line x1="4" y1="12" x2="20" y2="12" />
+              <line x1="4" y1="17" x2="20" y2="17" />
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <!-- mobile menu -->
+      <div id="mobile-menu" class="lg:hidden bg-white border-t border-linen">
+        <ul class="px-6 py-5 flex flex-col gap-5">
+          <li>
+            <a
+              href="#new"
+              class="text-[11px] tracking-widest uppercase font-light text-charcoal"
+              >New In</a
+            >
+          </li>
+          <li>
+            <a
+              href="#collection"
+              class="text-[11px] tracking-widest uppercase font-light text-charcoal"
+              >Collection</a
+            >
+          </li>
+          <li>
+            <a
+              href="#lookbook"
+              class="text-[11px] tracking-widest uppercase font-light text-charcoal"
+              >Lookbook</a
+            >
+          </li>
+          <li>
+            <a
+              href="#about"
+              class="text-[11px] tracking-widest uppercase font-light text-charcoal"
+              >About</a
+            >
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- search bar (slide-down) -->
+    <div id="search-bar" class="hidden bg-ivory border-b border-linen">
+      <div
+        class="max-w-screen-xl mx-auto px-6 lg:px-12 py-4 flex items-center gap-3"
+      >
+        <svg
+          class="w-4 h-4 text-stone shrink-0"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input
+          type="text"
+          placeholder="상품, 컬렉션 검색..."
+          class="flex-1 bg-transparent text-sm font-light text-ink placeholder:text-stone outline-none"
+        />
+        <button
+          id="search-close"
+          class="text-stone hover:text-ink text-xs tracking-widest uppercase"
+        >
+          닫기
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+    <section class="relative bg-ivory overflow-hidden">
+      <div
+        class="max-w-screen-xl mx-auto px-6 lg:px-12 pt-20 pb-0 grid lg:grid-cols-2 gap-0 items-end min-h-[88vh]"
+      >
+        <!-- text block -->
+        <div class="pb-16 lg:pb-24 z-10">
+          <p
+            class="reveal delay-1 text-[10px] tracking-widest2 uppercase text-stone mb-6"
+          >
+            SS 2025 Collection
+          </p>
+          <h1
+            class="reveal delay-2 font-display text-[clamp(3.5rem,8vw,7rem)] font-light leading-[1.05] tracking-wide text-ink mb-8"
+          >
+            Less,<br /><em class="not-italic">Better.</em>
+          </h1>
+          <p
+            class="reveal delay-3 text-sm font-light text-stone leading-relaxed max-w-xs mb-10"
+          >
+            군더더기 없는 셔츠, 슬랙스, 자켓.<br />매일 입고 싶어지는 옷을
+            만듭니다.
+          </p>
+          <div class="reveal delay-4 flex items-center gap-6">
+            <a
+              href="#collection"
+              class="bg-ink text-ivory text-[11px] tracking-widest uppercase font-light px-8 py-3.5 hover:bg-charcoal transition-colors duration-300"
+            >
+              컬렉션 보기
+            </a>
+            <a
+              href="#lookbook"
+              class="link-underline text-[11px] tracking-widest uppercase font-light text-charcoal"
+            >
+              Lookbook →
+            </a>
+          </div>
+        </div>
+
+        <!-- hero image -->
+        <div
+          class="reveal delay-3 relative h-[60vw] lg:h-full lg:min-h-[88vh] flex items-end justify-center overflow-hidden"
+        >
+          <!-- decorative bg rect -->
+          <div
+            class="absolute inset-x-4 top-8 bottom-0 bg-linen rounded-tl-[4rem]"
+          ></div>
+          <!-- hero photo -->
+          <img
+            src="./batuhan-dogan-4LTtqe3VKyU-unsplash.jpg"
+            alt="Hoon's SS 2025 — minimal menswear editorial"
+            class="relative z-10 w-full h-full object-cover object-top rounded-tl-[4rem]"
+          />
+        </div>
+      </div>
+
+      <!-- scroll hint -->
+      <div
+        class="reveal delay-5 absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <span class="text-[9px] tracking-widest2 uppercase text-stone"
+          >Scroll</span
+        >
+        <div class="w-px h-8 bg-stone/40 animate-pulse"></div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+     MARQUEE STRIP
+══════════════════════════════ -->
+    <div class="bg-ink py-4 overflow-hidden">
+      <div class="marquee-track">
+        <!-- duplicated for seamless loop -->
+        <template id="marquee-items">
+          <span
+            class="text-[10px] tracking-widest2 uppercase text-ivory/60 font-light whitespace-nowrap"
+            >New Collection</span
+          >
+          <span class="text-ivory/30 text-sm">·</span>
+          <span
+            class="text-[10px] tracking-widest2 uppercase text-ivory/60 font-light whitespace-nowrap"
+            >Free Shipping</span
+          >
+          <span class="text-ivory/30 text-sm">·</span>
+          <span
+            class="text-[10px] tracking-widest2 uppercase text-ivory/60 font-light whitespace-nowrap"
+            >Hoon's SS 2025</span
+          >
+          <span class="text-ivory/30 text-sm">·</span>
+          <span
+            class="text-[10px] tracking-widest2 uppercase text-ivory/60 font-light whitespace-nowrap"
+            >Modern Minimal</span
+          >
+          <span class="text-ivory/30 text-sm">·</span>
+          <span
+            class="text-[10px] tracking-widest2 uppercase text-ivory/60 font-light whitespace-nowrap"
+            >데일리 웨어</span
+          >
+          <span class="text-ivory/30 text-sm">·</span>
+          <span
+            class="text-[10px] tracking-widest2 uppercase text-ivory/60 font-light whitespace-nowrap"
+            >Shirts · Slacks · Jackets</span
+          >
+          <span class="text-ivory/30 text-sm">·</span>
+        </template>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+     NEW IN
+══════════════════════════════ -->
+    <section
+      id="new"
+      class="max-w-screen-xl mx-auto px-6 lg:px-12 py-20 lg:py-28"
+    >
+      <div class="flex items-end justify-between mb-12">
+        <div>
+          <p class="text-[10px] tracking-widest2 uppercase text-stone mb-3">
+            New Arrivals
+          </p>
+          <h2
+            class="font-display text-4xl lg:text-5xl font-light tracking-wide"
+          >
+            이번 주 신상품
+          </h2>
+        </div>
+        <a
+          href="#"
+          class="link-underline hidden lg:block text-[11px] tracking-widest uppercase font-light text-charcoal"
+          >전체 보기 →</a
+        >
+      </div>
+
+      <!-- product grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+        <!-- Product Card 1 -->
+        <div
+          class="product-card group cursor-pointer"
+          onclick="addToCart(this)"
+        >
+          <div class="product-img-wrap aspect-[3/4] bg-linen mb-4 relative">
+            <img
+              src="./robert-richman-vcTKFYNZop4-unsplash.jpg"
+              alt="오버핏 린넨 셔츠"
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+            <div class="absolute top-3 left-3">
+              <span
+                class="bg-ink text-ivory text-[9px] tracking-widest uppercase px-2 py-1"
+                >New</span
+              >
+            </div>
+            <!-- wishlist -->
+            <button
+              class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/80 rounded-full p-1.5 hover:bg-white"
+              onclick="event.stopPropagation()"
+            >
+              <svg
+                class="w-3.5 h-3.5 text-ink"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div>
+            <p class="text-[10px] tracking-widest uppercase text-stone mb-1">
+              Shirts
+            </p>
+            <h3 class="text-sm font-light text-ink mb-1">오버핏 린넨 셔츠</h3>
+            <p class="text-sm font-light text-charcoal">₩89,000</p>
+          </div>
+        </div>
+
+        <!-- Product Card 2 -->
+        <div
+          class="product-card group cursor-pointer"
+          onclick="addToCart(this)"
+        >
+          <div class="product-img-wrap aspect-[3/4] bg-[#E2DED7] mb-4 relative">
+            <img
+              src="./boluwatife-oguns-l3Qy1ZtK1TE-unsplash.jpg"
+              alt="슬림 테이퍼드 슬랙스"
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+            <div class="absolute top-3 left-3">
+              <span
+                class="bg-stone text-ivory text-[9px] tracking-widest uppercase px-2 py-1"
+                >Best</span
+              >
+            </div>
+            <button
+              class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/80 rounded-full p-1.5 hover:bg-white"
+              onclick="event.stopPropagation()"
+            >
+              <svg
+                class="w-3.5 h-3.5 text-ink"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div>
+            <p class="text-[10px] tracking-widest uppercase text-stone mb-1">
+              Slacks
+            </p>
+            <h3 class="text-sm font-light text-ink mb-1">
+              슬림 테이퍼드 슬랙스
+            </h3>
+            <p class="text-sm font-light text-charcoal">₩119,000</p>
+          </div>
+        </div>
+
+        <!-- Product Card 3 -->
+        <div
+          class="product-card group cursor-pointer"
+          onclick="addToCart(this)"
+        >
+          <div class="product-img-wrap aspect-[3/4] bg-ivory mb-4 relative">
+            <img
+              src="https://images.unsplash.com/photo-1606088931122-8cf1a7039560?w=800&q=80&auto=format&fit=crop"
+              alt="데일리 싱글 자켓"
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+            <div class="absolute top-3 left-3">
+              <span
+                class="bg-ink text-ivory text-[9px] tracking-widest uppercase px-2 py-1"
+                >New</span
+              >
+            </div>
+            <button
+              class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/80 rounded-full p-1.5 hover:bg-white"
+              onclick="event.stopPropagation()"
+            >
+              <svg
+                class="w-3.5 h-3.5 text-ink"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div>
+            <p class="text-[10px] tracking-widest uppercase text-stone mb-1">
+              Jacket
+            </p>
+            <h3 class="text-sm font-light text-ink mb-1">데일리 싱글 자켓</h3>
+            <p class="text-sm font-light text-charcoal">₩159,000</p>
+          </div>
+        </div>
+
+        <!-- Product Card 4 -->
+        <div
+          class="product-card group cursor-pointer"
+          onclick="addToCart(this)"
+        >
+          <div class="product-img-wrap aspect-[3/4] bg-[#DDD8D0] mb-4 relative">
+            <img
+              src="./sprite_oxford.jpg"
+              alt="스트라이프 옥스퍼드 셔츠"
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+            <button
+              class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/80 rounded-full p-1.5 hover:bg-white"
+              onclick="event.stopPropagation()"
+            >
+              <svg
+                class="w-3.5 h-3.5 text-ink"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div>
+            <p class="text-[10px] tracking-widest uppercase text-stone mb-1">
+              Shirts
+            </p>
+            <h3 class="text-sm font-light text-ink mb-1">
+              스트라이프 옥스퍼드 셔츠
+            </h3>
+            <p class="text-sm font-light text-charcoal">₩79,000</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-10 lg:hidden">
+        <a
+          href="#"
+          class="inline-block border border-ink text-ink text-[11px] tracking-widest uppercase font-light px-8 py-3 hover:bg-ink hover:text-ivory transition-colors duration-300"
+          >전체 보기</a
+        >
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+     COLLECTION CATEGORY
+══════════════════════════════ -->
+    <section id="collection" class="bg-ivory py-20 lg:py-28">
+      <div class="max-w-screen-xl mx-auto px-6 lg:px-12">
+        <div class="mb-12">
+          <p class="text-[10px] tracking-widest2 uppercase text-stone mb-3">
+            Shop by Category
+          </p>
+          <h2
+            class="font-display text-4xl lg:text-5xl font-light tracking-wide"
+          >
+            컬렉션
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <!-- wide card: Shirts -->
+          <div
+            class="lg:col-span-2 look-card aspect-[16/9] lg:aspect-auto lg:min-h-[400px] bg-linen rounded-sm cursor-pointer group"
+          >
+            <div
+              class="absolute inset-0 flex flex-col items-start justify-end p-8"
+            >
+              <div class="look-overlay-text">
+                <p
+                  class="text-[9px] tracking-widest2 uppercase text-ivory/70 mb-2"
+                >
+                  Category 01
+                </p>
+                <h3
+                  class="font-display text-3xl font-light text-ivory tracking-wide mb-3"
+                >
+                  셔츠
+                </h3>
+                <span
+                  class="link-underline text-[10px] tracking-widest uppercase text-ivory/80 font-light"
+                  >Shop Now →</span
+                >
+              </div>
+            </div>
+            <img
+              src="./abdiel-rosario-1rfAP5hEL0o-unsplash.jpg"
+              alt="셔츠 컬렉션"
+              class="look-img"
+            />
+            <div class="look-overlay"></div>
+          </div>
+
+          <!-- tall card: Slacks -->
+          <div
+            class="look-card aspect-[3/4] lg:aspect-auto bg-[#E0DCD4] rounded-sm cursor-pointer"
+          >
+            <div
+              class="absolute inset-0 flex flex-col items-start justify-end p-8"
+            >
+              <div class="look-overlay-text">
+                <p
+                  class="text-[9px] tracking-widest2 uppercase text-ivory/70 mb-2"
+                >
+                  Category 02
+                </p>
+                <h3
+                  class="font-display text-3xl font-light text-ivory tracking-wide mb-3"
+                >
+                  슬랙스
+                </h3>
+                <span
+                  class="link-underline text-[10px] tracking-widest uppercase text-ivory/80 font-light"
+                  >Shop Now →</span
+                >
+              </div>
+            </div>
+            <img
+              src="./tamara-harhai-ViXmQeEz9rE-unsplash.jpg"
+              alt="슬랙스 컬렉션"
+              class="look-img"
+            />
+            <div class="look-overlay"></div>
+          </div>
+
+          <!-- Jacket + Accessories row -->
+          <div
+            class="look-card aspect-[3/2] lg:aspect-auto bg-[#D6D1C8] rounded-sm cursor-pointer"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?w=800&q=80&auto=format&fit=crop"
+              alt="자켓 컬렉션"
+              class="look-img"
+            />
+            <div
+              class="absolute inset-0 flex flex-col items-start justify-end p-6"
+            >
+              <div class="look-overlay-text">
+                <p
+                  class="text-[9px] tracking-widest2 uppercase text-ivory/70 mb-1"
+                >
+                  Category 03
+                </p>
+                <h3
+                  class="font-display text-2xl font-light text-ivory tracking-wide mb-2"
+                >
+                  자켓
+                </h3>
+                <span
+                  class="link-underline text-[10px] tracking-widest uppercase text-ivory/80 font-light"
+                  >Shop Now →</span
+                >
+              </div>
+            </div>
+            <div class="look-overlay"></div>
+          </div>
+
+          <div
+            class="lg:col-span-2 look-card aspect-[16/7] bg-ink rounded-sm cursor-pointer flex items-center"
+          >
+            <div
+              class="absolute inset-0 flex items-center justify-between px-12 pointer-events-none"
+            >
+              <div>
+                <p
+                  class="text-[9px] tracking-widest2 uppercase text-ivory/40 mb-2"
+                >
+                  Curated Set
+                </p>
+                <h3
+                  class="font-display text-4xl font-light text-ivory tracking-wide"
+                >
+                  Complete<br /><em class="not-italic">the Look</em>
+                </h3>
+              </div>
+              <div class="hidden lg:flex gap-3">
+                <div class="w-16 h-20 bg-charcoal/60 rounded-sm"></div>
+                <div class="w-16 h-20 bg-charcoal/40 rounded-sm mt-4"></div>
+                <div class="w-16 h-20 bg-charcoal/60 rounded-sm"></div>
+              </div>
+            </div>
+            <div class="absolute bottom-6 left-12">
+              <div class="look-overlay-text">
+                <span
+                  class="link-underline text-[10px] tracking-widest uppercase text-ivory/70 font-light"
+                  >코디 보기 →</span
+                >
+              </div>
+            </div>
+            <div class="look-overlay !bg-transparent hover:!bg-ink/10"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+     LOOKBOOK
+══════════════════════════════ -->
+    <section
+      id="lookbook"
+      class="max-w-screen-xl mx-auto px-6 lg:px-12 py-20 lg:py-28"
+    >
+      <div class="flex items-end justify-between mb-12">
+        <div>
+          <p class="text-[10px] tracking-widest2 uppercase text-stone mb-3">
+            Editorial
+          </p>
+          <h2
+            class="font-display text-4xl lg:text-5xl font-light tracking-wide"
+          >
+            Lookbook
+          </h2>
+        </div>
+        <a
+          href="#"
+          class="link-underline hidden lg:block text-[11px] tracking-widest uppercase font-light text-charcoal"
+          >전체 보기 →</a
+        >
+      </div>
+
+      <!-- masonry-style grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
+        <div class="look-card aspect-[2/3] bg-linen rounded-sm">
+          <img
+            src="https://images.unsplash.com/photo-1603189343302-e603f7add05a?w=900&q=80&auto=format&fit=crop"
+            alt="Look 01 — Office Minimal"
+            class="look-img"
+          />
+          <div class="look-overlay">
+            <div class="look-overlay-text">
+              <p
+                class="text-[9px] tracking-widest2 uppercase text-ivory/70 mb-1"
+              >
+                Look 01
+              </p>
+              <p class="text-sm font-display font-light text-ivory">
+                Office Minimal
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="look-card aspect-[2/3] bg-[#DDD8D0] rounded-sm lg:mt-8">
+          <img
+            src="./florencia-simonini-qb3iYBz-RQ0-unsplash.jpg"
+            alt="Look 02 — Weekend Ease"
+            class="look-img"
+          />
+          <div class="look-overlay">
+            <div class="look-overlay-text">
+              <p
+                class="text-[9px] tracking-widest2 uppercase text-ivory/70 mb-1"
+              >
+                Look 02
+              </p>
+              <p class="text-sm font-display font-light text-ivory">
+                Weekend Ease
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="look-card aspect-[2/3] bg-[#E2DED7] rounded-sm col-span-2 lg:col-span-1 lg:mt-0"
+          style="aspect-ratio: 2/3"
+        >
+          <img
+            src="./fortune-vieyra-qC7jvmbEmRQ-unsplash.jpg"
+            alt="Look 03 — Smart Casual"
+            class="look-img"
+          />
+          <div class="look-overlay">
+            <div class="look-overlay-text">
+              <p
+                class="text-[9px] tracking-widest2 uppercase text-ivory/70 mb-1"
+              >
+                Look 03
+              </p>
+              <p class="text-sm font-display font-light text-ivory">
+                Smart Casual
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+     BRAND STATEMENT
+══════════════════════════════ -->
+    <section
+      id="about"
+      class="bg-ink text-ivory py-24 lg:py-36 overflow-hidden relative"
+    >
+      <div
+        class="max-w-screen-xl mx-auto px-6 lg:px-12 text-center relative z-10"
+      >
+        <p class="text-[10px] tracking-widest2 uppercase text-ivory/40 mb-8">
+          Our Philosophy
+        </p>
+        <h2
+          class="font-display text-[clamp(2.5rem,6vw,5rem)] font-light leading-[1.15] tracking-wide max-w-3xl mx-auto mb-10"
+        >
+          "좋은 옷은 <em class="not-italic text-cream">조용히</em><br />당신을
+          완성합니다."
+        </h2>
+        <p
+          class="text-sm font-light text-ivory/50 leading-relaxed max-w-md mx-auto mb-12"
+        >
+          Hoon's는 매일 꺼내 입고 싶은 옷을 만듭니다.<br />
+          과하지 않고, 부족하지 않은. 딱 그 자리.
+        </p>
+        <a
+          href="#"
+          class="link-underline text-[11px] tracking-widest uppercase font-light text-ivory/70 hover:text-ivory transition-colors"
+        >
+          브랜드 스토리 읽기 →
+        </a>
+      </div>
+      <!-- decorative letter -->
+      <div
+        class="absolute -right-12 top-1/2 -translate-y-1/2 font-display text-[20rem] font-light text-white/[0.03] select-none pointer-events-none leading-none"
+      >
+        H
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+     SIZE GUIDE CTA STRIP
+══════════════════════════════ -->
+    <section class="bg-linen py-14">
+      <div
+        class="max-w-screen-xl mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-6"
+      >
+        <div>
+          <p class="text-[10px] tracking-widest2 uppercase text-stone mb-2">
+            Size & Fit
+          </p>
+          <h3
+            class="font-display text-2xl lg:text-3xl font-light tracking-wide"
+          >
+            나에게 맞는 사이즈 찾기
+          </h3>
+        </div>
+        <a
+          href="#"
+          class="shrink-0 bg-ink text-ivory text-[11px] tracking-widest uppercase font-light px-8 py-3.5 hover:bg-charcoal transition-colors duration-300"
+        >
+          사이즈 가이드
+        </a>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+     NEWSLETTER
+══════════════════════════════ -->
+    <section
+      class="max-w-screen-xl mx-auto px-6 lg:px-12 py-20 lg:py-28 text-center"
+    >
+      <p class="text-[10px] tracking-widest2 uppercase text-stone mb-4">
+        Stay Updated
+      </p>
+      <h2
+        class="font-display text-3xl lg:text-4xl font-light tracking-wide mb-3"
+      >
+        신상품 & 시즌 오퍼 받기
+      </h2>
+      <p class="text-sm font-light text-stone mb-10">
+        구독하면 신상품 소식과 멤버 전용 할인을 가장 먼저 받아볼 수 있어요.
+      </p>
+      <div
+        class="flex flex-col sm:flex-row items-center justify-center gap-0 max-w-md mx-auto"
+      >
+        <input
+          type="email"
+          placeholder="이메일 주소"
+          class="w-full sm:flex-1 border border-linen bg-ivory text-sm font-light text-ink placeholder:text-stone px-5 py-3.5 outline-none focus:border-stone transition-colors"
+        />
+        <button
+          class="w-full sm:w-auto bg-ink text-ivory text-[11px] tracking-widest uppercase font-light px-7 py-3.5 hover:bg-charcoal transition-colors duration-300 border border-ink"
+        >
+          구독하기
+        </button>
+      </div>
+      <p class="text-[10px] text-stone/60 mt-4 font-light">
+        언제든 구독을 취소할 수 있습니다.
+      </p>
+    </section>
+
+    <!-- ══════════════════════════════
+     FOOTER
+══════════════════════════════ -->
+    <footer class="bg-ink text-ivory">
+      <div class="max-w-screen-xl mx-auto px-6 lg:px-12 pt-16 pb-10">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
+          <!-- brand -->
+          <div class="col-span-2 lg:col-span-1">
+            <p class="font-display text-2xl font-light tracking-widest2 mb-4">
+              Hoon's
+            </p>
+            <p
+              class="text-xs font-light text-ivory/40 leading-relaxed max-w-xs"
+            >
+              군더더기 없는 셔츠, 슬랙스, 자켓.<br />매일 입고 싶어지는 옷을
+              만듭니다.
+            </p>
+            <div class="flex gap-4 mt-6">
+              <a
+                href="#"
+                class="text-ivory/40 hover:text-ivory transition-colors"
+                aria-label="Instagram"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="#"
+                class="text-ivory/40 hover:text-ivory transition-colors"
+                aria-label="KakaoTalk"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M12 3C6.477 3 2 6.477 2 10.88c0 2.747 1.67 5.158 4.2 6.627L5.1 21l4.37-2.853c.84.159 1.698.239 2.53.239C17.523 18.386 22 14.86 22 10.88S17.523 3 12 3z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- shop -->
+          <div>
+            <p
+              class="text-[10px] tracking-widest2 uppercase text-ivory/30 mb-5"
+            >
+              Shop
+            </p>
+            <ul class="flex flex-col gap-3">
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >New In</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >셔츠</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >슬랙스</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >자켓</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >Lookbook</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- info -->
+          <div>
+            <p
+              class="text-[10px] tracking-widest2 uppercase text-ivory/30 mb-5"
+            >
+              Info
+            </p>
+            <ul class="flex flex-col gap-3">
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >브랜드 스토리</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >사이즈 가이드</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >소재 & 케어</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >지속가능성</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- customer -->
+          <div>
+            <p
+              class="text-[10px] tracking-widest2 uppercase text-ivory/30 mb-5"
+            >
+              Customer
+            </p>
+            <ul class="flex flex-col gap-3">
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >배송 & 반품</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >자주 묻는 질문</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >고객 문의</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-xs font-light text-ivory/60 hover:text-ivory transition-colors link-underline"
+                  >카카오 채널</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-white/10 pt-8 flex flex-col lg:flex-row items-center justify-between gap-4"
+        >
+          <p class="text-[10px] font-light text-ivory/25">
+            © 2025 Hoon's. All rights reserved.
+          </p>
+          <div class="flex gap-6">
+            <a
+              href="#"
+              class="text-[10px] font-light text-ivory/25 hover:text-ivory/60 transition-colors"
+              >개인정보처리방침</a
+            >
+            <a
+              href="#"
+              class="text-[10px] font-light text-ivory/25 hover:text-ivory/60 transition-colors"
+              >이용약관</a
+            >
+            <a
+              href="#"
+              class="text-[10px] font-light text-ivory/25 hover:text-ivory/60 transition-colors"
+              >사업자정보</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ══════════════════════════════
+     CART TOAST
+══════════════════════════════ -->
+    <div
+      id="toast"
+      class="fixed bottom-6 right-6 z-50 bg-ink text-ivory text-xs font-light tracking-wide px-5 py-3.5 opacity-0 translate-y-2 transition-all duration-300 pointer-events-none"
+    >
+      장바구니에 추가되었습니다.
+    </div>
+
+    <!-- ══════════════════════════════
+     JAVASCRIPT
+══════════════════════════════ -->
+    <script>
+      /* ── marquee fill ── */
+      const track = document.querySelector(".marquee-track");
+      const tpl = document.getElementById("marquee-items");
+      // duplicate content for seamless loop
+      for (let i = 0; i < 4; i++) {
+        const clone = document.importNode(tpl.content, true);
+        track.appendChild(clone);
+      }
+
+      /* ── navbar shadow on scroll ── */
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        navbar.style.boxShadow =
+          window.scrollY > 10 ? "0 1px 12px rgba(28,28,28,0.08)" : "";
+      });
+
+      /* ── mobile menu toggle ── */
+      const menuBtn = document.getElementById("menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("open");
+      });
+      // close when a link clicked
+      mobileMenu.querySelectorAll("a").forEach((a) => {
+        a.addEventListener("click", () => mobileMenu.classList.remove("open"));
+      });
+
+      /* ── search toggle ── */
+      const searchBar = document.getElementById("search-bar");
+      const searchBtn = document.getElementById("search-btn");
+      const searchClose = document.getElementById("search-close");
+      searchBtn.addEventListener("click", () => {
+        searchBar.classList.toggle("hidden");
+        if (!searchBar.classList.contains("hidden"))
+          searchBar.querySelector("input").focus();
+      });
+      searchClose.addEventListener("click", () =>
+        searchBar.classList.add("hidden"),
+      );
+
+      /* ── cart counter ── */
+      let cartCount = 0;
+      const badge = document.getElementById("cart-badge");
+
+      function addToCart(card) {
+        cartCount++;
+        badge.textContent = cartCount;
+        badge.classList.add("badge-pop");
+        setTimeout(() => badge.classList.remove("badge-pop"), 300);
+        showToast();
+      }
+
+      function showToast() {
+        const toast = document.getElementById("toast");
+        toast.style.opacity = "1";
+        toast.style.transform = "translateY(0)";
+        clearTimeout(showToast._t);
+        showToast._t = setTimeout(() => {
+          toast.style.opacity = "0";
+          toast.style.transform = "translateY(8px)";
+        }, 2200);
+      }
+
+      /* ── scroll reveal ── */
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.animationPlayState = "running";
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+
+      document
+        .querySelectorAll(".product-card, .look-card")
+        .forEach((el, i) => {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(20px)";
+          el.style.transition = `opacity 0.6s ease ${i * 0.08}s, transform 0.6s ease ${i * 0.08}s`;
+          revealObserver.observe(el);
+        });
+
+      // trigger scroll reveal
+      const scrollRevealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "none";
+              scrollRevealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      document.querySelectorAll(".product-card, .look-card").forEach((el) => {
+        scrollRevealObserver.observe(el);
+      });
+    </script>
+  </body>
+</html>
